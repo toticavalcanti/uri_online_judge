@@ -1,0 +1,8 @@
+3
+Ciencia da Computacao
+Engenharia Eletrica
+Matematica
+3
+Sociologia
+Filosofia
+Fisica

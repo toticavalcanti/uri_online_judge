@@ -1,0 +1,4 @@
+BODY
+10
+<><BODY garbage>body</BODY>
+
