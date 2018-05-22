@@ -1,44 +1,48 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Mar  1 09:52:25 2018
 
-@author: toti.cavalcanti
-"""
-def indexall(lst, value):
-    return [i for i, v in enumerate(lst) if v == value]
+def sub_tags(tag, num, str_to_sub):
+	opened = False
+	result = []
+	flag = False
+
+	tag = tag.lower()
+	i = 0
+	while i < len(str_to_sub):
+		if str_to_sub[i] == "<":
+			opened = True
+			result.append(str_to_sub[i])
+			i += 1
+		elif str_to_sub[i] == ">":
+			opened = False
+			result.append(str_to_sub[i])
+			i += 1
+		elif str_to_sub[i].lower() == tag[0] and opened:
+			pos = 0
+			flag = True
+			for j in range(1, len(tag)):
+				if str_to_sub[i + j].lower() == tag[j].lower():
+					flag = True
+					pos = j
+				else:
+					flag = False
+					result.append(str_to_sub[i])
+					i += 1
+					break
+			if flag:
+				result.append(str(num))
+				i = i + 1 + pos
+		else:
+			result.append(str_to_sub[i])
+			i = i + 1
+
+	return "".join(result)
 
 while True:
-    try:
-        tag = input().lower()
-        num = input()
-        s = input().lower()
-        l = []
-        open_tag = False
-        print(s)
-        #<><BODY garbage>body</BODY>
-        i = 0
-        while i < len(s):
-            if s[i] == '<' and open_tag == False:
-                open_tag = True
-                l.append(s[i])
-                i += 1
-            elif open_tag == False and s[i] == '>' or s[i] == '<' and open_tag == True:
-                break
-            elif s[i] == '>' and open_tag == True:
-                l.append(s[i])
-                i += 1
-                open_tag = False
-            elif open_tag == True:
-                if s[i:i + len(tag)] == tag:
-                    l.append(num)
-                    i += len(tag)
-                else:
-                    l.append(s[i])
-                    i += 1
-        print("".join(l))        
-                
-                
-        
-        
-    except(EOFError):
-        break
+	try:
+		tag = input()
+		num = input()
+		str_to_sub = input()
+		print(sub_tags(tag, num, str_to_sub))
+	except(EOFError):
+		break
